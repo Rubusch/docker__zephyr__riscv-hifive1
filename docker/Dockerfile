@@ -9,6 +9,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ## in case docker complains for a not set USER, perhaps you forgot to use --build-arg USER=$USER
 ARG USER=""
 
+ARG BRANCH=hifive1-revb
+
 
 ################################################################################
 ## set up apt fully functional
@@ -75,14 +77,16 @@ RUN sed -i '/%sudo/s/.*/%sudo   ALL=NOPASSWD: ALL/' /etc/sudoers
 
 ################################################################################
 ## zephyr SDK
-RUN mkdir -p /home/$USER/zephyrproject
 
-RUN cd /home/$USER/zephyrproject && wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
-RUN cd /home/$USER/zephyrproject && chmod +x zephyr-sdk-0.10.3-setup.run
-RUN cd /home/$USER/zephyrproject && ./zephyr-sdk-0.10.3-setup.run -- -d /home/$USER/zephyr-sdk-0.10.3
+RUN cd /home/$USER && git clone -j4 --branch ${BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr
 
+# TODO rm
+#RUN mkdir -p /home/$USER/zephyrproject
+#RUN cd /home/$USER/zephyrproject && wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
+#RUN cd /home/$USER/zephyrproject && chmod +x zephyr-sdk-0.10.3-setup.run
+#RUN cd /home/$USER/zephyrproject && ./zephyr-sdk-0.10.3-setup.run -- -d /home/$USER/zephyr-sdk-0.10.3
 ## set up 'unset preset flags' command script
-RUN echo 'unset CFLAGS CXXFLAGS' >> /etc/profile.d/unset_cflags.sh
+#RUN echo 'unset CFLAGS CXXFLAGS' >> /etc/profile.d/unset_cflags.sh
 
 
 ################################################################################
@@ -102,10 +106,6 @@ RUN cd /home/$USER/zephyrproject && pip3 install -r zephyr/scripts/requirements.
 ################################################################################
 ## specific: board settings
 
-RUN chown $USER:$USER -R /home/$USER
-
-## set up tools
-
 ## bash config
 RUN cd /home/$USER && sudo su $USER -c "rm -f /home/$USER/.bashrc" && sudo su $USER -c "ln -s /home/$USER/configs/.bashrc /home/$USER/"
 
@@ -120,6 +120,8 @@ RUN cd /home/$USER && sudo su $USER -c "git config --global alias.st status"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.ci commit"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.co checkout"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.br branch"
+
+RUN chown $USER:$USER -R /home/$USER
 
 
 ################################################################################
