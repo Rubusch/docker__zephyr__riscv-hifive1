@@ -17,7 +17,7 @@ $ time docker build --build-arg USER=$USER -t rubuschl/zephyr-hifive1:$(date +%Y
 
 ## Usage
 
-In case of Tag *20191104161353*, enter the container or simply build leaving out the ``/bin/bash``
+In case of Tag **20191104161353**, enter the container or simply build leaving out the ``/bin/bash``
 ```
 $ docker images
     REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
