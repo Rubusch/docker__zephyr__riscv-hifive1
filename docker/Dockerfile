@@ -45,7 +45,8 @@ RUN apt-get install -y   --no-install-recommends \
     gcc \
     gcc-multilib \
     g++-multilib \
-    libsdl2-dev
+    libsdl2-dev \
+    gnutls-bin
 
 ## (opt) tools for debugging and working
 RUN apt-get install -y   \
@@ -76,34 +77,6 @@ RUN sed -i '/%sudo/s/.*/%sudo   ALL=NOPASSWD: ALL/' /etc/sudoers
 
 
 ################################################################################
-## zephyr SDK
-
-RUN cd /home/$USER && git clone -j4 --branch ${BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr
-
-# TODO rm
-#RUN mkdir -p /home/$USER/zephyrproject
-#RUN cd /home/$USER/zephyrproject && wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
-#RUN cd /home/$USER/zephyrproject && chmod +x zephyr-sdk-0.10.3-setup.run
-#RUN cd /home/$USER/zephyrproject && ./zephyr-sdk-0.10.3-setup.run -- -d /home/$USER/zephyr-sdk-0.10.3
-## set up 'unset preset flags' command script
-#RUN echo 'unset CFLAGS CXXFLAGS' >> /etc/profile.d/unset_cflags.sh
-
-
-################################################################################
-## get zephyr sources via west (regular way to install)
-
-RUN pip3 install west
-RUN cd /home/$USER/ && west init zephyrproject
-RUN cd /home/$USER/zephyrproject && west update
-
-## (opt) use my own branch
-RUN cd /home/$USER/zephyrproject && rm -rf zephyr && git clone https://github.com/Rubusch/zephyr.git
-
-## continue zephyr sources installation
-RUN cd /home/$USER/zephyrproject && pip3 install -r zephyr/scripts/requirements.txt
-
-
-################################################################################
 ## specific: board settings
 
 ## bash config
@@ -120,8 +93,24 @@ RUN cd /home/$USER && sudo su $USER -c "git config --global alias.st status"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.ci commit"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.co checkout"
 RUN cd /home/$USER && sudo su $USER -c "git config --global alias.br branch"
+RUN cd /home/$USER && sudo su $USER -c "git config --global http.sslVerify false"
+RUN cd /home/$USER && sudo su $USER -c "git config --global http.postBuffer 1048576000"
 
 RUN chown $USER:$USER -R /home/$USER
+
+
+################################################################################
+## zephyr SDK
+
+RUN cd /home/$USER && git clone -j4 --depth 1 --branch ${BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr
+
+# TODO rm
+#RUN mkdir -p /home/$USER/zephyrproject
+#RUN cd /home/$USER/zephyrproject && wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
+#RUN cd /home/$USER/zephyrproject && chmod +x zephyr-sdk-0.10.3-setup.run
+#RUN cd /home/$USER/zephyrproject && ./zephyr-sdk-0.10.3-setup.run -- -d /home/$USER/zephyr-sdk-0.10.3
+## set up 'unset preset flags' command script
+#RUN echo 'unset CFLAGS CXXFLAGS' >> /etc/profile.d/unset_cflags.sh
 
 
 ################################################################################
