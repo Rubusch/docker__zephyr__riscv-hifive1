@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ARG USER="${USER}"
 
 ARG ZEPHYR_RISCV_BRANCH="hifive1-revb"
-ARG ZEPHYR_SDK_VERSION="-0.11.4"
+ARG ZEPHYR_SDK_VERSION="0.11.4"
 
 
 ################################################################################
@@ -114,11 +114,11 @@ RUN mkdir -p /home/$USER/.local/bin && chown $USER:$USER -R /home/$USER/.local
 RUN cd /home/$USER && sudo su $USER -c "export PATH=/home/${USER}/.local/bin:${PATH} && pip3 install --user -U west"
 
 ## zephyr toolchain
-RUN cd /home/$USER && sudo su $USER -c "wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.4/zephyr-sdk-0.11.4-setup.run"
-RUN cd /home/$USER && sudo su $USER -c "chmod +x zephyr-sdk-0.11.4-setup.run"
-RUN cd /home/$USER && sudo su $USER -c "./zephyr-sdk-0.11.4-setup.run -- -d /usr/local/zephyr-sdk${ZEPHYR_SDK_VERSION}"
-RUN cd /home/$USER && sudo su $USER -c "rm -rf ./zephyr-sdk-0.11.4-setup.run"
-#RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-0.11.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
+RUN cd /home/$USER && sudo su $USER -c "wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ZEPHYR_SDK_VERSION}/zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
+RUN cd /home/$USER && sudo su $USER -c "chmod +x zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
+RUN cd /home/$USER && sudo su $USER -c "./zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run -- -d /usr/local/zephyr-sdk-${ZEPHYR_SDK_VERSION}"
+RUN cd /home/$USER && sudo su $USER -c "rm -rf ./zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
+#RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-${ZEPHYR_SDK_VERSION}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
 #RUN cd /home/$USER && sudo su $USER -c "sudo udevadm control --reload"
 
 
