@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 ################################################################################
 ## the USER is needed to make it available as --build-arg
 ## in case docker complains for a not set USER, perhaps you forgot to use --build-arg USER=$USER
-ARG USER=""
+ARG USER="${USER}"
 
 ARG ZEPHYR_RISCV_BRANCH="hifive1-revb"
 ARG ZEPHYR_SDK_VERSION="-0.11.4"
@@ -117,6 +117,7 @@ RUN cd /home/$USER && sudo su $USER -c "export PATH=/home/${USER}/.local/bin:${P
 RUN cd /home/$USER && sudo su $USER -c "wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.11.4/zephyr-sdk-0.11.4-setup.run"
 RUN cd /home/$USER && sudo su $USER -c "chmod +x zephyr-sdk-0.11.4-setup.run"
 RUN cd /home/$USER && sudo su $USER -c "./zephyr-sdk-0.11.4-setup.run -- -d /usr/local/zephyr-sdk${ZEPHYR_SDK_VERSION}"
+RUN cd /home/$USER && sudo su $USER -c "rm -rf ./zephyr-sdk-0.11.4-setup.run"
 #RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-0.11.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
 #RUN cd /home/$USER && sudo su $USER -c "sudo udevadm control --reload"
 
