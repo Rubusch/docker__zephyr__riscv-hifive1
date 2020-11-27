@@ -17,7 +17,8 @@ $ time docker build --build-arg USER=$USER -t rubuschl/zephyr-hifive1:$(date +%Y
 
 ## Usage
 
-In case of Tag **20191104161353**, enter the container or simply build leaving out the ``/bin/bash``
+In case of Tag **20191104161353**, enter the container or simply build leaving out the ``/bin/bash``  
+
 ```
 $ docker images
     REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
@@ -34,12 +35,13 @@ Building the board support package (bsp) for the target, e.g. the HiFive1 board
 
 ```
 docker $> ./build.sh
-docker $> source ~/env.sh
 docker $> cd ~/zephyrproject
-docker $> west build -b TODO samples/hello_world
+docker $> west build -b hifive1-revb samples/hello_world
 ```
 
 Prepare flashing the target  
+
+TODO: needed?   
 
 ```
 docker $> echo 'ATTR{idProduct}=="0204", ATTR{idVendor}=="0d28", MODE="0666", GROUP="plugdev"' > /etc/udev/rules.d/50-cmsis-dap.rules
