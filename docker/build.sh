@@ -8,8 +8,10 @@ export ZEPHYR_BRANCH="v2.4-branch"
 ## TODO this will cost performance, improve!!!      
 sudo chown ${USER}:${USER} -R ${BUILDDIR}
 
-cd ${MY_HOME}
-west init ${MY_HOME}/zephyrproject
+if [[ ! -d "${BUILDDIR}/.west" ]]; then
+    cd ${MY_HOME}
+    west init ${BUILDDIR}
+fi
 
 cd ${BUILDDIR}
 west update
