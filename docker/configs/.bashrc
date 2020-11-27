@@ -124,3 +124,7 @@ if [[ -z "$(echo ${PATH} | grep '/usr/sbin')" ]]; then
     export PATH=${PATH}:/usr/sbin
 fi
 
+## append zephyr path settings
+if [[ -z "$(echo ${PATH} | grep '/home/${USER}/.local/bin')" ]]; then
+    export PATH=/home/${USER}/.local/bin:${PATH}
+fi
