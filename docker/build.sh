@@ -5,7 +5,7 @@ export BUILDDIR="${MY_HOME}/zephyrproject"
 export ZEPHYR_BRANCH="v2.4-branch"
 
 
-## TODO this will cost performance, improve!!!      
+## TODO this may cost performance
 sudo chown ${USER}:${USER} -R ${BUILDDIR}
 
 if [[ ! -d "${BUILDDIR}/.west" ]]; then

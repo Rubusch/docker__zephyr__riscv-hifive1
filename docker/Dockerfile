@@ -12,6 +12,7 @@ ARG USER=""
 ARG ZEPHYR_RISCV_BRANCH="hifive1-revb"
 ARG ZEPHYR_SDK_VERSION="-0.11.4"
 
+
 ################################################################################
 ## set up apt fully functional
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y --purge
@@ -104,6 +105,7 @@ RUN chown $USER:$USER -R /home/$USER
 ################################################################################
 ## zephyr SDK
 
+## sifive github: hifive1 board
 #RUN cd /home/$USER && sudo su $USER -c "git clone -j4 --depth 1 --branch ${ZEPHYR_RISCV_BRANCH} https://github.com/sifive/riscv-zephyr.git zephyrproject"
 
 ## setup zephyr
@@ -117,14 +119,6 @@ RUN cd /home/$USER && sudo su $USER -c "chmod +x zephyr-sdk-0.11.4-setup.run"
 RUN cd /home/$USER && sudo su $USER -c "./zephyr-sdk-0.11.4-setup.run -- -d /usr/local/zephyr-sdk${ZEPHYR_SDK_VERSION}"
 #RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-0.11.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
 #RUN cd /home/$USER && sudo su $USER -c "sudo udevadm control --reload"
-
-## zephyrproject folder
-# TODO: separate with external (mountable 'zephyrproject' folder)   
-#RUN cd /home/$USER && sudo su $USER -c "west init /home/$USER/zephyrproject"
-#RUN cd /home/$USER/zephyrproject && sudo su $USER -c "west update"
-#RUN sudo su $USER -c "west zephyr-export"
-#RUN sudo su $USER -c "pip3 install --user -r /home/$USER/zephyrproject/zephyr/scripts/requirements.txt"
-
 
 
 ################################################################################
