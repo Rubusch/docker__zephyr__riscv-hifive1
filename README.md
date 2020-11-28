@@ -1,8 +1,9 @@
 # docker__zephyr__riscv-hifive1
 
-Docker container for Sifive RISC-V HiVive1 Board.
+Docker container for Sifive RISC-V HiVive1 Board.  
 
-## Resources
+
+## References
 
 www.sifive.com/go/hifive1-revb-getting-started
 https://docs.zephyrproject.org/latest/boards/riscv/hifive1/doc/index.html
