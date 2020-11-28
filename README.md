@@ -5,6 +5,7 @@ Docker container for Sifive RISC-V HiVive1 Board.
 ## Resources
 
 www.sifive.com/go/hifive1-revb-getting-started
+https://docs.zephyrproject.org/latest/boards/riscv/hifive1/doc/index.html
 
 
 ## Build
