@@ -46,17 +46,14 @@ Building the board support package (bsp) for the target, e.g. the HiFive1 board
 docker $> ./build.sh
 ```
 
-NB: Make sure, after re-login also execute ``build.sh`` or at least fix all python dependencies are around (TODO improve this?)  
-```
-docker $> cd ~/zephyrproject/zephyr
-docker $> pip3 install -r /home/user/zephyrproject/zephyr/scripts/requirements.txt
-```
+NB: after re-login needs to execute ``build.sh`` or at least fix all python dependencies are around (TODO to be improved)  
+
 
 Build an example  
 
 ```
 docker $> cd ~/zephyrproject/zephyr
-docker $> west build -p auto -b hifive1_revb samples/hello_world
+docker $> west build -p auto -b hifive1_revb samples/basic/blinky
 ```
 
 (opt) Provide an udev rule  
