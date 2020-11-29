@@ -1,6 +1,11 @@
 #!/bin/bash -e
+##
+## references:
+## https://docs.zephyrproject.org/latest/getting_started/index.html#get-the-source-code
+##
 
-export MY_HOME="/home/$(whoami)"
+export USER="$(whoami)"
+export MY_HOME="/home/${USER}"
 export BUILDDIR="${MY_HOME}/zephyrproject"
 export ZEPHYR_BRANCH="v2.4-branch"
 
