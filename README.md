@@ -5,9 +5,9 @@ Docker container for Sifive RISC-V HiVive1 Board.
 
 ## References
 
-www.sifive.com/go/hifive1-revb-getting-started
-https://docs.zephyrproject.org/latest/boards/riscv/hifive1/doc/index.html
-https://risc-v-getting-started-guide.readthedocs.io/en/latest/zephyr-hifive1.html
+www.sifive.com/go/hifive1-revb-getting-started  
+https://docs.zephyrproject.org/latest/boards/riscv/hifive1/doc/index.html  
+https://risc-v-getting-started-guide.readthedocs.io/en/latest/zephyr-hifive1.html  
 
 
 ## Build
@@ -46,7 +46,7 @@ Building the board support package (bsp) for the target, e.g. the HiFive1 board
 docker $> ./build.sh
 ```
 
-NB: Make sure, after re-login also execute ``build.sh`` or at least fix all python dependencies are around (TODO improve this?)
+NB: Make sure, after re-login also execute ``build.sh`` or at least fix all python dependencies are around (TODO improve this?)  
 ```
 docker $> cd ~/zephyrproject/zephyr
 docker $> pip3 install -r /home/user/zephyrproject/zephyr/scripts/requirements.txt
@@ -56,7 +56,7 @@ Build an example
 
 ```
 docker $> cd ~/zephyrproject/zephyr
-docker $> west build -p auto -b hifive1-revb samples/hello_world
+docker $> west build -p auto -b hifive1_revb samples/hello_world
 ```
 
 (opt) Provide an udev rule  

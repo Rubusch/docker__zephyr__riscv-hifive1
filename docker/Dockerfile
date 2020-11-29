@@ -121,6 +121,10 @@ RUN cd /home/$USER && sudo su $USER -c "rm -rf ./zephyr-sdk-${ZEPHYR_SDK_VERSION
 #RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-${ZEPHYR_SDK_VERSION}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
 #RUN cd /home/$USER && sudo su $USER -c "sudo udevadm control --reload"
 
+## segger (...)
+COPY JLink_Linux_V644e_x86_64.deb /home/$USER/JLink_Linux_V644e_x86_64.deb
+RUN dpkg -i /home/$USER/JLink_Linux_V644e_x86_64.deb
+
 
 ################################################################################
 ## command mode
