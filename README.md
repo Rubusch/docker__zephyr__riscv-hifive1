@@ -1,5 +1,7 @@
 # docker__zephyr__riscv-hifive1
 
+![SiFive_HiFive1_RevB](pics/sifive_hifive1_revb.jpg)
+
 Docker container for Sifive RISC-V HiVive1 Board.  
 
 
