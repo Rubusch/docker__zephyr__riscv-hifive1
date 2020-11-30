@@ -117,7 +117,7 @@ RUN cd /home/$USER/zephyrproject && sudo su $USER -c "west update"
 RUN cd /home/$USER/zephyrproject && sudo su $USER -c "west zephyr-export"
 
 ## (1/2) use zephyr sources to install python requirements, then remove it again (will be mounted from outside)
-RUN rm -rf /home/$USER/zephyrproject/zephyr && RUN cd /home/$USER/zephyrproject && sudo su $USER -c "git clone -j4 --depth 1 --branch ${ZEPHYR_RISCV_BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr"
+RUN rm -rf /home/$USER/zephyrproject/zephyr && cd /home/$USER/zephyrproject && sudo su $USER -c "git clone -j4 --depth 1 --branch ${ZEPHYR_RISCV_BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr"
 
 RUN cd /home/$USER/zephyrproject && sudo su $USER -c "pip3 install --user -r zephyr/scripts/requirements.txt"
 
