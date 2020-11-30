@@ -33,7 +33,7 @@ fi
 
 ## build an example
 cd ~/zephyrproject/zephyr
-west build -p auto -b reel_board_v2 samples/basic/blinky
+west build -p auto -b hifive1_revb samples/basic/blinky
 west flash --erase
 
 echo "READY."
