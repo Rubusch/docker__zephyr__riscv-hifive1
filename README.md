@@ -64,13 +64,7 @@ docker $> cd ~/zephyrproject/zephyr
 docker $> west build -p auto -b hifive1_revb samples/basic/blinky
 ```
 
-Serial console  
-
-```
-docker $> screen /dev/ttyACM0 115200,-parenb,cstopb,cs8
-```
-
-Flash the target  
+Flashing the target  
 
 ```
 docker $> west flash --erase
@@ -78,6 +72,13 @@ docker $> west flash --erase
 
 
 ## Miscellaneous
+
+
+Serial console 
+
+```
+docker $> minicom -D /dev/ttyS0 -b 115200
+```
 
 For convenience provide an udev rule, and joint the **plugdev** group  
 
