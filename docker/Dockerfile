@@ -105,21 +105,35 @@ RUN chown $USER:$USER -R /home/$USER
 ################################################################################
 ## zephyr SDK
 
-## sifive github: hifive1 board
-#RUN cd /home/$USER && sudo su $USER -c "git clone -j4 --depth 1 --branch ${ZEPHYR_RISCV_BRANCH} https://github.com/sifive/riscv-zephyr.git zephyrproject"
-
-## setup zephyr
+## prepare environment
+RUN cd /home/$USER && sudo su $USER -c "mkdir -p /home/$USER/zephyrproject"
 RUN ln -s /usr/local /home/$USER/.local && chown $USER:$USER -R /usr/local
 RUN mkdir -p /home/$USER/.local/bin && chown $USER:$USER -R /home/$USER/.local
-RUN cd /home/$USER && sudo su $USER -c "export PATH=/home/${USER}/.local/bin:${PATH} && pip3 install --user -U west"
 
-## zephyr toolchain
+## setup west in 'zephyrproject'
+RUN cd /home/$USER && sudo su $USER -c "export PATH=/home/${USER}/.local/bin:${PATH} && pip3 install --user -U west"
+RUN cd /home/$USER/ && sudo su $USER -c "west init zephyrproject"
+RUN cd /home/$USER/zephyrproject && sudo su $USER -c "west update"
+RUN cd /home/$USER/zephyrproject && sudo su $USER -c "west zephyr-export"
+
+## (1/2) use zephyr sources to install python requirements, then remove it again (will be mounted from outside)
+RUN rm -rf /home/$USER/zephyrproject/zephyr && RUN cd /home/$USER/zephyrproject && sudo su $USER -c "git clone -j4 --depth 1 --branch ${ZEPHYR_RISCV_BRANCH} https://github.com/sifive/riscv-zephyr.git zephyr"
+
+RUN cd /home/$USER/zephyrproject && sudo su $USER -c "pip3 install --user -r zephyr/scripts/requirements.txt"
+
+## (2/2) 'zephyr' will be mounted, so better remove this, to avoid some confusion with overlays...
+RUN rm -rf /home/$USER/zephyrproject/zephyr
+
+## zephyr toolchain - NB: the following typically fails with 'Error in the pull function' behind a tunneled connection
 RUN cd /home/$USER && sudo su $USER -c "wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v${ZEPHYR_SDK_VERSION}/zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
 RUN cd /home/$USER && sudo su $USER -c "chmod +x zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
 RUN cd /home/$USER && sudo su $USER -c "./zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run -- -d /usr/local/zephyr-sdk-${ZEPHYR_SDK_VERSION}"
 RUN cd /home/$USER && sudo su $USER -c "rm -rf ./zephyr-sdk-${ZEPHYR_SDK_VERSION}-setup.run"
 #RUN cd /home/$USER && sudo su $USER -c "sudo cp ~/zephyr-sdk-${ZEPHYR_SDK_VERSION}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d"
 #RUN cd /home/$USER && sudo su $USER -c "sudo udevadm control --reload"
+
+### (opt) set up 'unset preset flags' command script
+RUN echo 'unset CFLAGS CXXFLAGS' >> /etc/profile.d/unset_cflags.sh
 
 ## segger (...)
 COPY JLink_Linux_V644e_x86_64.deb /home/$USER/JLink_Linux_V644e_x86_64.deb
