@@ -23,12 +23,10 @@ $ cd ./docker/
 $ time docker build --build-arg USER=$USER -t rubuschl/zephyr-hifive1:$(date +%Y%m%d%H%M%S) .
 ```
 
-(opt) Append ``--no-cache`` for really re-building the container, which may fix some build bugs  
+(opt) ``--no-cache`` for full re-build  
 
 
 ## Usage
-
-In case of Tag **20191104161353**, enter the container or simply build leaving out the ``/bin/bash``  
 
 ```
 $ docker images
@@ -37,11 +35,16 @@ $ docker images
     ...
 
 $ docker run --rm -ti --privileged --user=$USER:$USER --workdir=/home/$USER --device=/dev/ttyACM0 -v $PWD/configs:/home/$USER/configs -v $PWD/zephyrproject:/home/$USER/zephyrproject rubuschl/zephyr-hifive1:20191104161353 /bin/bash
+
+docker $> ./build.sh
 ```
 
-Make sure the device is plugged (/dev/ttyACM0 exists)
+Make sure the device is plugged (/dev/ttyACM0 exists)  
+
 NB: Appending ``--privileged`` is not _safe_! Mainly this is used for such things as connecting the USB (SEGGER) the easiest way possible.  
+
 NB: Append ``/bin/bash`` to enter the current container for debugging  
+
 
 
 ## Target
