@@ -50,7 +50,8 @@ RUN apt-get install -y --no-install-recommends \
     gcc-multilib \
     g++-multilib \
     libsdl2-dev \
-    gnutls-bin
+    gnutls-bin \
+    usbutils
 
 ## (opt) tools for debugging and working
 RUN apt-get install -y   \
